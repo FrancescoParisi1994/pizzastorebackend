@@ -1,16 +1,44 @@
 package it.prova.pizzastorebackend;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import it.prova.pizzastorebackend.model.Ruolo;
+import it.prova.pizzastorebackend.model.Utente;
+import it.prova.pizzastorebackend.service.ruolo.RuoloService;
+import it.prova.pizzastorebackend.service.utente.UtenteService;
+
 @SpringBootApplication
 public class PizzastorebackendApplication implements CommandLineRunner{
+	
+	@Autowired
+	private RuoloService ruoloServiceInstance;
+	
+	@Autowired
+	private UtenteService utenteServiceInstance;
 
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
 		
+		if (ruoloServiceInstance.cercaPerDescrizioneECodice("Administrator", Ruolo.ADMIN_ROLE) == null) {
+			ruoloServiceInstance.inserisciNuovo(Ruolo.builder().descrizione("Administrator").codice(Ruolo.ADMIN_ROLE).build());
+		}
+		
+		if (utenteServiceInstance.findByUsername("admin") == null) {
+			Utente admin = Utente.builder().username("admin").password("admin").nome("Mario").cognome("Rossi").build();
+			Set<Ruolo> ruoli = new HashSet<Ruolo>();
+			ruoli.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Administrator", Ruolo.ADMIN_ROLE));
+			admin.setRuoli(ruoli);
+			utenteServiceInstance.inserisciNuovo(admin);
+			// l'inserimento avviene come created ma io voglio attivarlo
+			utenteServiceInstance.changeUserAbilitation(admin.getId());
+		}
 	}
 
 	public static void main(String[] args) {
