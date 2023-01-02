@@ -26,14 +26,14 @@ public class PizzastorebackendApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
 		
-		if (ruoloServiceInstance.cercaPerDescrizioneECodice("Administrator", Ruolo.ADMIN_ROLE) == null) {
-			ruoloServiceInstance.inserisciNuovo(Ruolo.builder().descrizione("Administrator").codice(Ruolo.ADMIN_ROLE).build());
+		if (ruoloServiceInstance.cercaPerDescrizioneECodice("Administrator", Ruolo.ROLE_ADMIN) == null) {
+			ruoloServiceInstance.inserisciNuovo(Ruolo.builder().descrizione("Administrator").codice(Ruolo.ROLE_ADMIN).build());
 		}
 		
 		if (utenteServiceInstance.findByUsername("admin") == null) {
 			Utente admin = Utente.builder().username("admin").password("admin").nome("Mario").cognome("Rossi").build();
 			Set<Ruolo> ruoli = new HashSet<Ruolo>();
-			ruoli.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Administrator", Ruolo.ADMIN_ROLE));
+			ruoli.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Administrator", Ruolo.ROLE_ADMIN));
 			admin.setRuoli(ruoli);
 			utenteServiceInstance.inserisciNuovo(admin);
 			// l'inserimento avviene come created ma io voglio attivarlo

@@ -22,10 +22,10 @@ import lombok.Setter;
 @Builder
 public class Ruolo {
 	
-	public static final String ADMIN_ROLE = "ADMIN_ROLE";
-	public static final String PIZZAIOLO_ROLE = "PIZZAIOLO_ROLE";
-	public static final String PROPRIETARIO_ROLE = "PROPRIETARIO_ROLE";
-	public static final String FATTORINO_ROLE = "FATTORINO_ROLE";
+	public static final String ROLE_ADMIN = "ROLE_ADMIN";
+	public static final String ROLE_PIZZAIOLO = "ROLE_PIZZAIOLO";
+	public static final String ROLE_PROPRIETARIO = "ROLE_PROPRIETARIO";
+	public static final String ROLE_FATTORINO = "ROLE_FATTORINO";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
