@@ -17,51 +17,51 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.prova.pizzastorebackend.dto.ClienteDTO;
-import it.prova.pizzastorebackend.dto.ClienteInsertDTO;
+import it.prova.pizzastorebackend.dto.PizzaDTO;
+import it.prova.pizzastorebackend.dto.PizzaInsertDTO;
 import it.prova.pizzastorebackend.exception.IdNotFoundException;
-import it.prova.pizzastorebackend.service.cliente.ClienteService;
+import it.prova.pizzastorebackend.service.pizza.PizzaService;
 
 @RestController
-@RequestMapping("/api/cliente")
+@RequestMapping("/api/pizza")
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
-public class ClienteController {
+public class PizzaController {
 
 	@Autowired
-	private ClienteService service;
+	private PizzaService pizzaService;
 
 	@GetMapping
-	public List<ClienteDTO> listAll() {
-		return ClienteDTO.buildDTOListFromModelList(service.listAll());
+	public List<PizzaDTO> listAll() {
+		return PizzaDTO.buildDTOListFromModelList(pizzaService.listAll());
 	}
 
 	@GetMapping("/search")
-	public List<ClienteDTO> search(@RequestBody ClienteDTO dto) {
-		return ClienteDTO.buildDTOListFromModelList(service.findByExample(dto.buildModelFromDTO()));
+	public List<PizzaDTO> search(@RequestBody PizzaDTO dto) {
+		return PizzaDTO.buildDTOListFromModelList(pizzaService.findByExample(dto.buildModelFromDTO()));
 	}
 
 	@GetMapping("/{id}")
-	public ClienteDTO findElement(@PathVariable(required = true) Long id) {
-		return ClienteDTO.buildDTOFromModel(service.findById(id));
+	public PizzaDTO findById(@PathVariable(required = true) Long id) {
+		return PizzaDTO.buildDTOFromModel(pizzaService.findById(id));
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ClienteDTO insert(@Valid @RequestBody ClienteInsertDTO dto) {
-		return ClienteDTO.buildDTOFromModel(service.insert(dto.buildModelFromDTO()));
+	public PizzaDTO insert(@Valid @RequestBody PizzaInsertDTO dto) {
+		return PizzaDTO.buildDTOFromModel(pizzaService.insert(dto.buildModelFromDTO()));
 	}
 
 	@PutMapping
-	public ClienteDTO update(@Valid @RequestBody ClienteInsertDTO dto) {
+	public PizzaDTO update(@Valid @RequestBody PizzaInsertDTO dto) {
 		if (dto.getId() == null) {
 			throw new IdNotFoundException();
 		}
-		return ClienteDTO.buildDTOFromModel(service.update(dto.buildModelFromDTO()));
+		return PizzaDTO.buildDTOFromModel(pizzaService.update(dto.buildModelFromDTO()));
 	}
 
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable(required = true) Long id) {
-		service.delete(id);
+		pizzaService.delete(id);
 	}
 }

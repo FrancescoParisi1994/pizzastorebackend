@@ -1,18 +1,18 @@
 package it.prova.pizzastorebackend.exception;
 
-public class ClienteNotFoundException extends RuntimeException {
+public class PizzaNotFoundException extends RuntimeException {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public ClienteNotFoundException() {
-		super("Cliente ricercato non trovato");
+	public PizzaNotFoundException() {
+		super("Pizza ricercata non trovata");
 		// TODO Auto-generated constructor stub
 	}
 
-	public ClienteNotFoundException(String message) {
+	public PizzaNotFoundException(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}

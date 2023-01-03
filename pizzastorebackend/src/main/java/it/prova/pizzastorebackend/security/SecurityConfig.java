@@ -32,6 +32,7 @@ public class SecurityConfig {
 				//tutti gli utenti autenticati possono richiedere le info
 				.antMatchers("/api/utente/userInfo").authenticated()
 				.antMatchers("/api/cliente/**").hasRole("ADMIN")
+				.antMatchers("/api/pizza/**").hasRole("PIZZAIOLO")
 				// .antMatchers("/anonymous*").anonymous()
 				.anyRequest().authenticated()
 				.and()

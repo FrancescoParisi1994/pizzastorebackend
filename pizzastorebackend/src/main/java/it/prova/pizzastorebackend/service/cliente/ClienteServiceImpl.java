@@ -14,38 +14,43 @@ import it.prova.pizzastorebackend.repository.cliente.ClienteRepository;
 @Service
 @Transactional
 public class ClienteServiceImpl implements ClienteService {
-	
+
 	@Autowired
 	private ClienteRepository repository;
 
 	@Transactional(readOnly = true)
-	public List<Cliente> listAll(){
+	public List<Cliente> listAll() {
 		return repository.findByAttivoTrue();
 	}
 
 	@Transactional(readOnly = true)
-	public List<Cliente> findByExample(Cliente cliente){
+	public List<Cliente> findByExample(Cliente cliente) {
 		return repository.findByExample(cliente);
 	}
-	
+
 	@Transactional(readOnly = true)
 	public Cliente findById(Long id) {
-		if (id==null) {
+		if (id == null) {
 			throw new IdNotFoundException();
 		}
-		Cliente cliente=repository.findByIdAndAttivoTrue(id).orElse(null);
-		if (cliente==null) {
+		Cliente cliente = repository.findByIdAndAttivoTrue(id).orElse(null);
+		if (cliente == null) {
 			throw new ClienteNotFoundException();
 		}
 		return cliente;
 	}
-	
+
 	public Cliente insert(Cliente cliente) {
+		cliente.setId(null);
 		cliente.setAttivo(true);
 		return repository.save(cliente);
 	}
-	
+
 	public Cliente update(Cliente cliente) {
+		if (cliente.getId() == null) {
+			throw new IdNotFoundException();
+		}
+
 		Cliente daModificare = findById(cliente.getId());
 		if (!daModificare.getNome().equals(cliente.getNome())) {
 			daModificare.setNome(cliente.getNome());
@@ -58,12 +63,12 @@ public class ClienteServiceImpl implements ClienteService {
 		}
 		return repository.save(daModificare);
 	}
-	
+
 	public void delete(Long id) {
-		if (id==null) {
+		if (id == null) {
 			throw new IdNotFoundException();
 		}
-		Cliente cliente=findById(id);
+		Cliente cliente = findById(id);
 		cliente.setAttivo(false);
 		repository.save(cliente);
 	}

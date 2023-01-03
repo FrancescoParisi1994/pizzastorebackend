@@ -24,13 +24,13 @@ public class ClienteInsertDTO {
 
 	private Long id;
 	@NonNull
-	@NotBlank
+	@NotBlank(message = "{notblanck.cliente.nome}")
 	private String nome;
 	@NonNull
-	@NotBlank
+	@NotBlank(message = "{notblanck.cliente.cognome}")
 	private String cognome;
 	@NonNull
-	@NotBlank
+	@NotBlank(message = "{notblanck.cliente.indirizzo}")
 	private String indirizzo;
 	private boolean attivo;
 	

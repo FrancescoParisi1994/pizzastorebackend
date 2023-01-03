@@ -22,16 +22,19 @@ public class ClienteDTO {
 	private String cognome;
 	private String indirizzo;
 	private boolean attivo;
-	
+
 	public Cliente buildModelFromDTO() {
 		return new Cliente(getId(), getNome(), getCognome(), getIndirizzo(), isAttivo());
 	}
-	
+
 	public static ClienteDTO buildDTOFromModel(Cliente cliente) {
-		return new ClienteDTO(cliente.getId(), cliente.getNome(), cliente.getCognome(), cliente.getIndirizzo(), cliente.isAttivo());
+		return new ClienteDTO(cliente.getId(), cliente.getNome(), cliente.getCognome(), cliente.getIndirizzo(),
+				cliente.isAttivo());
 	}
-	
-	public static List<ClienteDTO> buildDTOListFromModelList(List<Cliente> clienti){
-		return clienti.stream().map(Element -> {return buildDTOFromModel(Element);}).collect(Collectors.toList());
+
+	public static List<ClienteDTO> buildDTOListFromModelList(List<Cliente> clienti) {
+		return clienti.stream().map(Element -> {
+			return buildDTOFromModel(Element);
+		}).collect(Collectors.toList());
 	}
 }

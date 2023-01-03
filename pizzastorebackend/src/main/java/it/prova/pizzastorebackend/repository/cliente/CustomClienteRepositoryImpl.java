@@ -38,6 +38,7 @@ public class CustomClienteRepositoryImpl implements CustomClienteRepository {
 			paramaterMap.put("indirizzo", "%" + input.getIndirizzo() + "%");
 		}
 		
+		whereClauses.add(" r.attivo = true");
 		queryBuilder.append(!whereClauses.isEmpty()?" and ":"");
 		queryBuilder.append(StringUtils.join(whereClauses, " and "));
 		TypedQuery<Cliente> typedQuery = entityManager.createQuery(queryBuilder.toString(), Cliente.class);
