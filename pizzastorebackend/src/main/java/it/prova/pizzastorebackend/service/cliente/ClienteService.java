@@ -15,4 +15,6 @@ public interface ClienteService {
 	public Cliente update(Cliente cliente);
 	
 	public void delete(Long id);
+	
+	public List<Cliente> findByExample(Cliente cliente);
 }

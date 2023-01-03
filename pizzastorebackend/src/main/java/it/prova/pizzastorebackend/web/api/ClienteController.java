@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.prova.pizzastorebackend.dto.ClienteDTO;
+import it.prova.pizzastorebackend.dto.ClienteInsertDTO;
 import it.prova.pizzastorebackend.exception.IdNotFoundException;
 import it.prova.pizzastorebackend.service.cliente.ClienteService;
 
@@ -34,6 +35,11 @@ public class ClienteController {
 		return ClienteDTO.buildDTOListFromModelList(service.listAll());
 	}
 	
+	@GetMapping("/search")
+	public List<ClienteDTO> search(@RequestBody ClienteDTO dto){
+		return ClienteDTO.buildDTOListFromModelList(service.findByExample(dto.buildModelFromDTO()));
+	}
+	
 	@GetMapping("/{id}")
 	public ClienteDTO findElement(@PathVariable(required = true)Long id){
 		return ClienteDTO.buildDTOFromModel(service.findById(id));
@@ -41,14 +47,14 @@ public class ClienteController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ClienteDTO insert(@Valid @RequestBody ClienteDTO dto) {
+	public ClienteDTO insert(@Valid @RequestBody ClienteInsertDTO dto) {
 		return ClienteDTO.buildDTOFromModel(service.insert(dto.buildModelFromDTO()));
 	}
 	
 	@PutMapping
-	public ClienteDTO update(@Valid @RequestBody ClienteDTO dto) {
+	public ClienteDTO update(@Valid @RequestBody ClienteInsertDTO dto) {
 		if (dto.getId()==null) {
-			throw new IdNotFoundException("Id non trovato");
+			throw new IdNotFoundException();
 		}
 		return ClienteDTO.buildDTOFromModel(service.update(dto.buildModelFromDTO()));
 	}

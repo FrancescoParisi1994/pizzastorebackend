@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import it.prova.pizzastorebackend.model.Cliente;
 
-public interface ClienteRepository extends CrudRepository<Cliente, Long>{
+public interface ClienteRepository extends CrudRepository<Cliente, Long>,CustomClienteRepository{
 
 	public List<Cliente> findByAttivoTrue();
 	

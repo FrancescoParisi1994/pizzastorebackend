@@ -24,13 +24,18 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Transactional(readOnly = true)
+	public List<Cliente> findByExample(Cliente cliente){
+		return repository.findByExample(cliente);
+	}
+	
+	@Transactional(readOnly = true)
 	public Cliente findById(Long id) {
 		if (id==null) {
-			throw new IdNotFoundException("Id non trovato");
+			throw new IdNotFoundException();
 		}
 		Cliente cliente=repository.findByIdAndAttivoTrue(id).orElse(null);
 		if (cliente==null) {
-			throw new ClienteNotFoundException("Elemento non trovato");
+			throw new ClienteNotFoundException();
 		}
 		return cliente;
 	}
@@ -56,7 +61,7 @@ public class ClienteServiceImpl implements ClienteService {
 	
 	public void delete(Long id) {
 		if (id==null) {
-			throw new IdNotFoundException("Id non trovato");
+			throw new IdNotFoundException();
 		}
 		Cliente cliente=findById(id);
 		cliente.setAttivo(false);
