@@ -46,6 +46,28 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
 	}
 
+	@ExceptionHandler(PizzaNotFoundException.class)
+	public ResponseEntity<Object> handleFilmNotFoundException(PizzaNotFoundException ex, WebRequest request) {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDateTime.now());
+		body.put("message", ex.getMessage());
+		body.put("status", HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(OrdineNotFoundException.class)
+	public ResponseEntity<Object> handleFilmNotFoundException(OrdineNotFoundException ex, WebRequest request) {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDateTime.now());
+		body.put("message", ex.getMessage());
+		body.put("status", HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+	}
+
 	@ExceptionHandler(IdNotFoundException.class)
 	public ResponseEntity<Object> handleRegistaNotFoundException(IdNotFoundException ex, WebRequest request) {
 
@@ -56,7 +78,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
 	}
-//
+
 //	@ExceptionHandler(IdNotNullForInsertException.class)
 //	public ResponseEntity<Object> handleIdNotNullForInsertException(IdNotNullForInsertException ex,
 //			WebRequest request) {

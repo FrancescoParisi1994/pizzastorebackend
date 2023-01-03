@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -41,10 +40,10 @@ public class Ordine {
 	private String codice;
 	@Column(name = "costotot")
 	private Integer costoTot;
-	@Column(name = "attivo")
-	private boolean attivo;
 	@Column(name = "data")
 	private Date data;
+	@Column(name = "attivo")
+	private boolean attivo;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "ordine_pizza", joinColumns = @JoinColumn(name = "ordine_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "pizza_id", referencedColumnName = "id"))
@@ -54,7 +53,7 @@ public class Ordine {
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fattorino_id")
 	private Utente fattorino;
 }
