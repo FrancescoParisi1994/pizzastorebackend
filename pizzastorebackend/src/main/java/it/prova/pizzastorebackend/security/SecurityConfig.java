@@ -33,6 +33,7 @@ public class SecurityConfig {
 				.antMatchers("/api/utente/userInfo").authenticated()
 				.antMatchers("/api/cliente/**").hasRole("ADMIN")
 				.antMatchers("/api/pizza/**").hasRole("PIZZAIOLO")
+				.antMatchers("/api/ordine/**").hasRole("PIZZAIOLO")
 				// .antMatchers("/anonymous*").anonymous()
 				.anyRequest().authenticated()
 				.and()

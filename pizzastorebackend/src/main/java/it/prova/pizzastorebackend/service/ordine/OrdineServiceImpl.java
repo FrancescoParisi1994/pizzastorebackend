@@ -42,6 +42,7 @@ public class OrdineServiceImpl implements OrdineService {
 	}
 
 	public Ordine insert(Ordine ordine) {
+		ordine.setCostoTot(calcolaPrezzoOrdine(ordine));
 		ordine.setAttivo(true);
 		return repository.save(ordine);
 	}
