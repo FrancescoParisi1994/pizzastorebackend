@@ -1,8 +1,5 @@
 package it.prova.pizzastorebackend.dto;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.validation.constraints.NotBlank;
 
 import it.prova.pizzastorebackend.model.Cliente;
@@ -38,12 +35,4 @@ public class ClienteInsertDTO {
 		return new Cliente(getId(), getNome(), getCognome(), getIndirizzo(), isAttivo());
 	}
 	
-	public static ClienteDTO buildDTOFromModel(Cliente cliente) {
-		return new ClienteDTO(cliente.getId(), cliente.getNome(), cliente.getCognome(), cliente.getIndirizzo(), cliente.isAttivo());
-	}
-	
-	public static List<ClienteDTO> buildDTOListFromModelList(List<Cliente> clienti){
-		return clienti.stream().map(Element -> {return buildDTOFromModel(Element);}).collect(Collectors.toList());
-	}
-
 }

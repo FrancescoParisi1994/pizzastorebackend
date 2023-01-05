@@ -1,6 +1,8 @@
 package it.prova.pizzastorebackend.service.ordine;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,9 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.pizzastorebackend.exception.IdNotFoundException;
 import it.prova.pizzastorebackend.exception.OrdineNotFoundException;
+import it.prova.pizzastorebackend.model.Cliente;
 import it.prova.pizzastorebackend.model.Ordine;
 import it.prova.pizzastorebackend.model.Pizza;
+import it.prova.pizzastorebackend.model.Utente;
 import it.prova.pizzastorebackend.repository.ordine.OrdineRepository;
+import it.prova.pizzastorebackend.service.cliente.ClienteService;
+import it.prova.pizzastorebackend.service.pizza.PizzaService;
+import it.prova.pizzastorebackend.service.utente.UtenteService;
 
 @Service
 @Transactional
@@ -18,6 +25,15 @@ public class OrdineServiceImpl implements OrdineService {
 
 	@Autowired
 	private OrdineRepository repository;
+
+	@Autowired
+	private PizzaService service;
+
+	@Autowired
+	private ClienteService clienteService;
+
+	@Autowired
+	private UtenteService utenteService;
 
 	@Transactional(readOnly = true)
 	public List<Ordine> listAll() {
@@ -42,6 +58,14 @@ public class OrdineServiceImpl implements OrdineService {
 	}
 
 	public Ordine insert(Ordine ordine) {
+		List<Pizza> pizze = ordine.getPizze().stream().map(item -> {
+			return service.findById(item.getId());
+		}).collect(Collectors.toList());
+		ordine.setPizze(pizze);
+		Cliente cliente = clienteService.findById(ordine.getCliente().getId());
+		ordine.setCliente(cliente);
+		Utente fattorino = utenteService.caricaSingoloUtente(ordine.getFattorino().getId());
+		ordine.setFattorino(fattorino);
 		ordine.setCostoTot(calcolaPrezzoOrdine(ordine));
 		ordine.setAttivo(true);
 		return repository.save(ordine);
@@ -80,12 +104,21 @@ public class OrdineServiceImpl implements OrdineService {
 		ordine.setAttivo(false);
 		repository.save(ordine);
 	}
-	
+
 	public Integer calcolaPrezzoOrdine(Ordine ordine) {
 		Integer tot = 0;
 		for (Pizza pizzaItem : ordine.getPizze()) {
 			tot += pizzaItem.getPrezzo();
 		}
 		return tot;
+	}
+
+	public List<Ordine> report(Ordine ordine) {
+		Long idPizza = ordine.getPizze().stream().findAny().orElse(null).getId();
+		return repository.report(ordine.getData(), ordine.getCliente().getId(), idPizza);
+	}
+
+	public List<Ordine> statistiche(LocalDate inizio, LocalDate fine) {
+		return repository.statistiche(inizio, fine);
 	}
 }

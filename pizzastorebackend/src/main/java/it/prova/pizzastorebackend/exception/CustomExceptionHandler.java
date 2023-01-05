@@ -79,16 +79,16 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
 	}
 
-//	@ExceptionHandler(IdNotNullForInsertException.class)
-//	public ResponseEntity<Object> handleIdNotNullForInsertException(IdNotNullForInsertException ex,
-//			WebRequest request) {
-//
-//		Map<String, Object> body = new LinkedHashMap<>();
-//		body.put("timestamp", LocalDateTime.now());
-//		body.put("message", ex.getMessage());
-//		body.put("status", HttpStatus.UNPROCESSABLE_ENTITY);
-//
-//		return new ResponseEntity<>(body, HttpStatus.UNPROCESSABLE_ENTITY);
-//	}
+	@ExceptionHandler(NoFattorinoException.class)
+	public ResponseEntity<Object> handleIdNotNullForInsertException(NoFattorinoException ex,
+			WebRequest request) {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDateTime.now());
+		body.put("message", ex.getMessage());
+		body.put("status", HttpStatus.BAD_REQUEST);
+
+		return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+	}
 
 }

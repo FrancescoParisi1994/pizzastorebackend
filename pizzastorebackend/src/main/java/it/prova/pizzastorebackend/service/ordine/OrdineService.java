@@ -1,5 +1,6 @@
 package it.prova.pizzastorebackend.service.ordine;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import it.prova.pizzastorebackend.model.Ordine;
@@ -18,4 +19,7 @@ public interface OrdineService {
 
 	public void delete(Long id);
 
+	public List<Ordine> report(Ordine ordine);
+	
+	public List<Ordine> statistiche(LocalDate inizio,LocalDate fine);
 }

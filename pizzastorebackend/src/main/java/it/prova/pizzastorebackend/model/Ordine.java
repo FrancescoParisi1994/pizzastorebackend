@@ -1,6 +1,6 @@
 package it.prova.pizzastorebackend.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -41,7 +41,7 @@ public class Ordine {
 	@Column(name = "costotot")
 	private Integer costoTot;
 	@Column(name = "data")
-	private Date data;
+	private LocalDate data;
 	@Column(name = "attivo")
 	private boolean attivo;
 

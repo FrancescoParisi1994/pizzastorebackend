@@ -56,6 +56,38 @@ public class PizzastorebackendApplication implements CommandLineRunner {
 			// l'inserimento avviene come created ma io voglio attivarlo
 			utenteServiceInstance.changeUserAbilitation(pizzaiolo.getId());
 		}
+
+		if (ruoloServiceInstance.cercaPerDescrizioneECodice("Fattorino", Ruolo.ROLE_FATTORINO) == null) {
+			ruoloServiceInstance
+					.inserisciNuovo(Ruolo.builder().descrizione("Fattorino").codice(Ruolo.ROLE_FATTORINO).build());
+		}
+
+		if (utenteServiceInstance.findByUsername("fattorino") == null) {
+			Utente fattorino = Utente.builder().username("fattorino").password("fattorino").nome("Mario")
+					.cognome("Rossi").build();
+			Set<Ruolo> ruoli = new HashSet<Ruolo>();
+			ruoli.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Fattorino", Ruolo.ROLE_FATTORINO));
+			fattorino.setRuoli(ruoli);
+			utenteServiceInstance.inserisciNuovo(fattorino);
+			// l'inserimento avviene come created ma io voglio attivarlo
+			utenteServiceInstance.changeUserAbilitation(fattorino.getId());
+		}
+
+		if (ruoloServiceInstance.cercaPerDescrizioneECodice("Proprietario", Ruolo.ROLE_PROPRIETARIO) == null) {
+			ruoloServiceInstance.inserisciNuovo(
+					Ruolo.builder().descrizione("Proprietario").codice(Ruolo.ROLE_PROPRIETARIO).build());
+		}
+
+		if (utenteServiceInstance.findByUsername("proprietario") == null) {
+			Utente proprietario = Utente.builder().username("proprietario").password("proprietario").nome("Mario")
+					.cognome("Rossi").build();
+			Set<Ruolo> ruoli = new HashSet<Ruolo>();
+			ruoli.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Proprietario", Ruolo.ROLE_PROPRIETARIO));
+			proprietario.setRuoli(ruoli);
+			utenteServiceInstance.inserisciNuovo(proprietario);
+			// l'inserimento avviene come created ma io voglio attivarlo
+			utenteServiceInstance.changeUserAbilitation(proprietario.getId());
+		}
 	}
 
 	public static void main(String[] args) {

@@ -8,6 +8,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
 @EnableWebSecurity
 public class SecurityConfig {
 
@@ -34,6 +35,7 @@ public class SecurityConfig {
 				.antMatchers("/api/cliente/**").hasRole("ADMIN")
 				.antMatchers("/api/pizza/**").hasRole("PIZZAIOLO")
 				.antMatchers("/api/ordine/**").hasRole("PIZZAIOLO")
+				.antMatchers("/api/proprietario/**").hasRole("PROPRIETARIO")
 				// .antMatchers("/anonymous*").anonymous()
 				.anyRequest().authenticated()
 				.and()
